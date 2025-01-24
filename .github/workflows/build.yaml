@@ -5,6 +5,10 @@ on:
     branches:
       - "main"
 
+env:
+  REGION: "europe-nort1"
+  REPO: "youtube"
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -23,6 +27,6 @@ jobs:
         env:
           GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT_ID }}
         run: |
-          gcloud auth configure-docker europe-north1-docker.pkg.dev
-          docker build -t europe-north1-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/youtube/nginx:latest .
-          docker push europe-north1-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/youtube/nginx:latest
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+          docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ REPO }}/nginx:latest .
+          docker push ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ REPO }}/nginx:latest
