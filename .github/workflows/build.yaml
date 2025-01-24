@@ -8,6 +8,7 @@ on:
 env:
   REGION: "europe-north1"
   REPO: "youtube"
+  DOCKER_IMAGE_NAME: "nginx"
 
 jobs:
   deploy:
@@ -23,9 +24,7 @@ jobs:
           credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       - name: build and push the docker image
-        env:
-          GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT_ID }}
         run: |
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
-          docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ env.REPO }}/nginx:latest .
-          docker push ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ env.REPO }}/nginx:latest
+          docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ env.REPO }}/${{ env.DOCKER_IMAGE_NAME }}:latest .
+          docker push ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT_ID }}/${{ env.REPO }}/${{ env.DOCKER_IMAGE_NAME }}:latest
