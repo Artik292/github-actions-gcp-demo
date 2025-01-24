@@ -6,7 +6,7 @@ on:
       - "main"
 
 env:
-  REGION: "europe-nort1"
+  REGION: "europe-north1"
   REPO: "youtube"
 
 jobs:
